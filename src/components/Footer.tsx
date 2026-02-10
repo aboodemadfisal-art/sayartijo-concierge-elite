@@ -1,6 +1,9 @@
 import { Crown } from "lucide-react";
+import { useLang } from "@/contexts/LangContext";
 
 const Footer = () => {
+  const { t } = useLang();
+
   return (
     <footer className="border-t border-border bg-card px-6 py-12">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -11,7 +14,7 @@ const Footer = () => {
           </span>
         </div>
         <p className="text-muted-foreground font-body text-xs tracking-wider">
-          © 2026 SayartiJo. The art of luxury mobility.
+          {t("footer.tagline")}
         </p>
       </div>
     </footer>

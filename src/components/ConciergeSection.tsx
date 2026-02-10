@@ -1,30 +1,17 @@
 import { motion } from "framer-motion";
 import { Car, MapPin, Shield, Clock } from "lucide-react";
-
-const services = [
-  {
-    icon: Car,
-    title: "Chauffeur Service",
-    description: "Professional drivers available 24/7 for any occasion.",
-  },
-  {
-    icon: MapPin,
-    title: "Door-to-Door Delivery",
-    description: "Your vehicle delivered and collected at your location.",
-  },
-  {
-    icon: Shield,
-    title: "Full Insurance",
-    description: "Comprehensive coverage for complete peace of mind.",
-  },
-  {
-    icon: Clock,
-    title: "24/7 Support",
-    description: "Dedicated concierge line for all your needs.",
-  },
-];
+import { useLang } from "@/contexts/LangContext";
 
 const ConciergeSection = () => {
+  const { t } = useLang();
+
+  const services = [
+    { icon: Car, title: t("concierge.chauffeur"), description: t("concierge.chauffeur.desc") },
+    { icon: MapPin, title: t("concierge.delivery"), description: t("concierge.delivery.desc") },
+    { icon: Shield, title: t("concierge.insurance"), description: t("concierge.insurance.desc") },
+    { icon: Clock, title: t("concierge.support"), description: t("concierge.support.desc") },
+  ];
+
   return (
     <section id="concierge" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
@@ -35,17 +22,17 @@ const ConciergeSection = () => {
           className="text-center mb-16"
         >
           <p className="text-primary font-body text-xs tracking-[0.3em] uppercase mb-3">
-            White-Glove Experience
+            {t("concierge.subtitle")}
           </p>
           <h2 className="font-display text-3xl md:text-5xl text-foreground">
-            Concierge Services
+            {t("concierge.title")}
           </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, i) => (
             <motion.div
-              key={service.title}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
