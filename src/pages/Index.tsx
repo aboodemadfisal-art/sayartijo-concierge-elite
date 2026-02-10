@@ -6,14 +6,16 @@ import CarCard from "@/components/CarCard";
 import ConciergeSection from "@/components/ConciergeSection";
 import Footer from "@/components/Footer";
 import { collections, featuredCars } from "@/data/cars";
+import { useLang } from "@/contexts/LangContext";
 
 const Index = () => {
+  const { t } = useLang();
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <HeroSection />
 
-      {/* Collections */}
       <section id="collections" className="section-padding bg-background">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -23,10 +25,10 @@ const Index = () => {
             className="mb-12"
           >
             <p className="text-primary font-body text-xs tracking-[0.3em] uppercase mb-3">
-              Curated For You
+              {t("collections.subtitle")}
             </p>
             <h2 className="font-display text-3xl md:text-5xl text-foreground">
-              Luxury Collections
+              {t("collections.title")}
             </h2>
           </motion.div>
 
@@ -38,7 +40,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Fleet */}
       <section id="fleet" className="section-padding bg-card/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -49,10 +50,10 @@ const Index = () => {
           >
             <div>
               <p className="text-primary font-body text-xs tracking-[0.3em] uppercase mb-3">
-                Handpicked Excellence
+                {t("fleet.subtitle")}
               </p>
               <h2 className="font-display text-3xl md:text-5xl text-foreground">
-                Featured Fleet
+                {t("fleet.title")}
               </h2>
             </div>
           </motion.div>
