@@ -92,6 +92,10 @@ const translations: Record<string, Record<Lang, string>> = {
   "booking.bouquet": { en: "Bridal Bouquet", ar: "مسكة عروس" },
   "booking.whatsapp": { en: "Book via WhatsApp", ar: "حجز عبر واتساب" },
   "booking.enquire": { en: "Enquire Now", ar: "استفسر الآن" },
+  "booking.additionalServices": { en: "Additional Services", ar: "خدمات إضافية" },
+  "booking.driver": { en: "Private Chauffeur", ar: "سائق خاص" },
+  "booking.doorDelivery": { en: "Door-to-Door Delivery", ar: "توصيل باب لباب" },
+  "booking.vipService": { en: "VIP Service", ar: "خدمة VIP — تسليم في الموقع" },
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);
