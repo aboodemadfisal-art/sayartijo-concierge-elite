@@ -78,6 +78,18 @@ const translations: Record<string, Record<Lang, string>> = {
 
   // Language
   "lang.switch": { en: "العربية", ar: "English" },
+
+  // Booking
+  "booking.title": { en: "Book", ar: "حجز" },
+  "booking.selectType": { en: "Select usage type:", ar: "اختر نوع الاستخدام:" },
+  "booking.business": { en: "Business", ar: "رجال أعمال" },
+  "booking.wedding": { en: "Wedding", ar: "أعراس" },
+  "booking.personal": { en: "Personal Use", ar: "استخدام شخصي" },
+  "booking.weddingExtras": { en: "Wedding Extras", ar: "إضافات خاصة بالعرسان" },
+  "booking.carDecor": { en: "Car Decoration", ar: "زينة سيارة" },
+  "booking.bouquet": { en: "Bridal Bouquet", ar: "مسكة عروس" },
+  "booking.whatsapp": { en: "Book via WhatsApp", ar: "حجز عبر واتساب" },
+  "booking.enquire": { en: "Enquire Now", ar: "استفسر الآن" },
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);

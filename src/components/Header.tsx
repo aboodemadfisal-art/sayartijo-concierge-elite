@@ -43,12 +43,12 @@ const Header = () => {
             <Globe className="h-4 w-4" />
             {t("lang.switch")}
           </button>
-          <Link
-            to="/car/1"
+          <a
+            href="#fleet"
             className="px-5 py-2 text-sm font-body tracking-wider uppercase bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors duration-300"
           >
             {t("nav.bookNow")}
-          </Link>
+          </a>
         </nav>
 
         <button
@@ -85,13 +85,13 @@ const Header = () => {
                 <Globe className="h-4 w-4" />
                 {t("lang.switch")}
               </button>
-              <Link
-                to="/car/1"
+              <a
+                href="#fleet"
                 onClick={() => setMobileOpen(false)}
                 className="mt-2 px-5 py-3 text-sm text-center font-body tracking-wider uppercase bg-primary text-primary-foreground rounded-sm"
               >
                 {t("nav.bookNow")}
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}

@@ -1,8 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BadgeCheck, Gauge, Users, Zap, Car, MapPin, Calendar } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, Gauge, Users, Zap, Car, MessageCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BookingModal from "@/components/BookingModal";
 import { featuredCars } from "@/data/cars";
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
@@ -10,8 +11,7 @@ import { useLang } from "@/contexts/LangContext";
 const CarDetail = () => {
   const { id } = useParams();
   const car = featuredCars.find((c) => c.id === id);
-  const [chauffeur, setChauffeur] = useState(false);
-  const [delivery, setDelivery] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
   const { t, isRTL } = useLang();
 
   const BackArrow = isRTL ? ArrowRight : ArrowLeft;
@@ -45,13 +45,18 @@ const CarDetail = () => {
               initial={{ opacity: 0, x: isRTL ? 30 : -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7 }}
-              className="rounded-sm overflow-hidden"
+              className="rounded-sm overflow-hidden relative"
             >
               <img
                 src={car.image}
                 alt={`${car.brand} ${car.name}`}
                 className="w-full h-full object-cover aspect-[4/3]"
               />
+              <div className="absolute bottom-4 end-4 px-3 py-1 bg-background/80 backdrop-blur-sm rounded-sm border border-primary/30">
+                <span className="text-primary font-body text-[10px] tracking-wider font-semibold">
+                  SAYARTI.JO
+                </span>
+              </div>
             </motion.div>
 
             <motion.div
@@ -69,14 +74,9 @@ const CarDetail = () => {
 
               <h1 className="font-display text-4xl md:text-5xl text-foreground mb-2">{car.name}</h1>
 
-              <p className="text-muted-foreground font-body text-sm mb-1">
+              <p className="text-muted-foreground font-body text-sm mb-6">
                 {t("detail.by")} <span className="text-foreground">{car.vendor}</span>
               </p>
-
-              <div className="flex items-baseline gap-1 mt-4 mb-8">
-                <span className="text-gold-gradient font-display text-3xl">${car.pricePerDay}</span>
-                <span className="text-muted-foreground font-body text-sm">{t("fleet.perDay")}</span>
-              </div>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="p-4 bg-card border border-border rounded-sm">
@@ -112,28 +112,12 @@ const CarDetail = () => {
                 </div>
               </div>
 
-              <div className="mb-8 space-y-3">
-                <h3 className="font-display text-lg text-foreground mb-3">{t("detail.addons")}</h3>
-                <label className="flex items-center gap-3 p-4 bg-card border border-border rounded-sm cursor-pointer hover:border-primary/30 transition-colors">
-                  <input type="checkbox" checked={chauffeur} onChange={(e) => setChauffeur(e.target.checked)} className="accent-primary" />
-                  <MapPin className="h-4 w-4 text-primary" />
-                  <div>
-                    <p className="text-foreground font-body text-sm">{t("detail.chauffeur")}</p>
-                    <p className="text-muted-foreground font-body text-xs">{t("detail.chauffeurPrice")}</p>
-                  </div>
-                </label>
-                <label className="flex items-center gap-3 p-4 bg-card border border-border rounded-sm cursor-pointer hover:border-primary/30 transition-colors">
-                  <input type="checkbox" checked={delivery} onChange={(e) => setDelivery(e.target.checked)} className="accent-primary" />
-                  <Calendar className="h-4 w-4 text-primary" />
-                  <div>
-                    <p className="text-foreground font-body text-sm">{t("detail.doorDelivery")}</p>
-                    <p className="text-muted-foreground font-body text-xs">{t("detail.doorDeliveryPrice")}</p>
-                  </div>
-                </label>
-              </div>
-
-              <button className="w-full py-4 bg-primary text-primary-foreground font-body text-sm tracking-wider uppercase rounded-sm hover:bg-primary/90 transition-colors duration-300">
-                {t("nav.bookNow")} — ${car.pricePerDay + (chauffeur ? 300 : 0) + (delivery ? 150 : 0)}{t("fleet.perDay")}
+              <button
+                onClick={() => setShowBooking(true)}
+                className="w-full flex items-center justify-center gap-2 py-4 bg-primary text-primary-foreground font-body text-sm tracking-wider uppercase rounded-sm hover:bg-primary/90 transition-colors duration-300"
+              >
+                <MessageCircle className="h-5 w-5" />
+                {t("booking.whatsapp")}
               </button>
             </motion.div>
           </div>
@@ -141,6 +125,10 @@ const CarDetail = () => {
       </main>
 
       <Footer />
+
+      {showBooking && (
+        <BookingModal car={car} onClose={() => setShowBooking(false)} />
+      )}
     </div>
   );
 };
