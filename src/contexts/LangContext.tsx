@@ -39,6 +39,8 @@ const translations: Record<string, Record<Lang, string>> = {
   "collection.prestige.desc": { en: "The pinnacle of refinement", ar: "قمة الرقي والفخامة" },
   "collection.suv": { en: "Luxury SUVs", ar: "SUV فاخرة" },
   "collection.suv.desc": { en: "Command every road", ar: "تحكّم بكل طريق" },
+  "collection.wedding": { en: "Wedding Cars", ar: "سيارات أعراس" },
+  "collection.wedding.desc": { en: "Make your day unforgettable", ar: "اجعل يومك لا يُنسى" },
 
   // Fleet
   "fleet.subtitle": { en: "Handpicked Excellence", ar: "تميّز مختار بعناية" },

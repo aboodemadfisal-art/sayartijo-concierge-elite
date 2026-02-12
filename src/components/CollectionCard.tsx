@@ -6,6 +6,7 @@ const collectionKeys: Record<string, { title: string; desc: string }> = {
   supercars: { title: "collection.supercars", desc: "collection.supercars.desc" },
   prestige: { title: "collection.prestige", desc: "collection.prestige.desc" },
   "luxury-suv": { title: "collection.suv", desc: "collection.suv.desc" },
+  wedding: { title: "collection.wedding", desc: "collection.wedding.desc" },
 };
 
 const CollectionCard = ({ collection, index }: { collection: Collection; index: number }) => {
