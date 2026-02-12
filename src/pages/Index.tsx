@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -5,11 +6,14 @@ import CollectionCard from "@/components/CollectionCard";
 import CarCard from "@/components/CarCard";
 import ConciergeSection from "@/components/ConciergeSection";
 import Footer from "@/components/Footer";
+import BookingModal from "@/components/BookingModal";
 import { collections, featuredCars } from "@/data/cars";
+import type { Car } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
 const Index = () => {
   const { t } = useLang();
+  const [bookingCar, setBookingCar] = useState<Car | null>(null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,7 +64,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredCars.map((car, i) => (
-              <CarCard key={car.id} car={car} index={i} />
+              <CarCard key={car.id} car={car} index={i} onBook={setBookingCar} />
             ))}
           </div>
         </div>
@@ -68,6 +72,10 @@ const Index = () => {
 
       <ConciergeSection />
       <Footer />
+
+      {bookingCar && (
+        <BookingModal car={bookingCar} onClose={() => setBookingCar(null)} />
+      )}
     </div>
   );
 };
