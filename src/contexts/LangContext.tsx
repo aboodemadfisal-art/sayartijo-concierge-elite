@@ -15,6 +15,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "nav.showrooms": { en: "Showrooms", ar: "صالات العرض" },
   "nav.concierge": { en: "Concierge", ar: "خدمات VIP" },
   "nav.bookNow": { en: "Book Now", ar: "احجز الآن" },
+  "nav.admin": { en: "Admin", ar: "لوحة التحكم" },
 
   // Hero
   "hero.subtitle": { en: "Jordan's Premier Luxury Fleet", ar: "أسطول الأردن الفاخر الأول" },
@@ -104,6 +105,18 @@ const translations: Record<string, Record<Lang, string>> = {
   "fuel.gasoline": { en: "Gasoline", ar: "بنزين" },
   "fuel.electric": { en: "Electric", ar: "كهرباء" },
   "fuel.hybrid": { en: "Hybrid", ar: "هايبرد" },
+
+  // Guarantees
+  "guarantee.subtitle": { en: "Why Choose Us", ar: "لماذا نحن" },
+  "guarantee.title": { en: "Our Guarantees", ar: "ضماناتنا" },
+  "guarantee.insurance": { en: "Full Insurance", ar: "تأمين شامل" },
+  "guarantee.insurance.desc": { en: "Every vehicle comes with comprehensive insurance coverage for your complete peace of mind.", ar: "كل مركبة تأتي بتغطية تأمينية شاملة لراحة بالك التامة." },
+  "guarantee.fleet": { en: "Exclusive Fleet", ar: "أسطول حصري" },
+  "guarantee.fleet.desc": { en: "Jordan's most unique collection of luxury and prestige vehicles, handpicked for excellence.", ar: "أفخم مجموعة سيارات في الأردن، مختارة بعناية للتميّز." },
+  "guarantee.quality": { en: "Premium Quality", ar: "جودة فاخرة" },
+  "guarantee.quality.desc": { en: "Each car is meticulously maintained and detailed to the highest standards before every rental.", ar: "كل سيارة تُصان وتُجهّز بأعلى المعايير قبل كل تأجير." },
+  "guarantee.support": { en: "24/7 Support", ar: "دعم متواصل" },
+  "guarantee.support.desc": { en: "Round-the-clock assistance with a dedicated concierge team always ready to help.", ar: "مساعدة على مدار الساعة مع فريق كونسيرج مخصص جاهز دائماً." },
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);

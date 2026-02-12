@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Lock, Car, CheckCircle, XCircle, Calendar, ArrowLeft } from "lucide-react";
+import { Lock, Car, CheckCircle, XCircle, Calendar, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { featuredCars } from "@/data/cars";
 
@@ -9,7 +9,7 @@ const ADMIN_PIN = "5050";
 const Admin = () => {
   const [pin, setPin] = useState("");
   const [isAuth, setIsAuth] = useState(false);
-  const [carStatuses, setCarStatuses] = useState<Record<string, { status: string; note: string }>>(
+  const [carStatuses, setCarStatuses] = useState<Record<string, { status: string; note: string; startDate: string; endDate: string }>>(
     () => {
       const saved = localStorage.getItem("sayarti_car_statuses");
       return saved ? JSON.parse(saved) : {};
@@ -23,10 +23,15 @@ const Admin = () => {
     }
   };
 
-  const updateStatus = (carId: string, status: string, note: string) => {
-    const updated = { ...carStatuses, [carId]: { status, note } };
+  const updateStatus = (carId: string, updates: Partial<{ status: string; note: string; startDate: string; endDate: string }>) => {
+    const current = carStatuses[carId] || { status: "متاحة", note: "", startDate: "", endDate: "" };
+    const updated = { ...carStatuses, [carId]: { ...current, ...updates } };
     setCarStatuses(updated);
     localStorage.setItem("sayarti_car_statuses", JSON.stringify(updated));
+  };
+
+  const cancelBooking = (carId: string) => {
+    updateStatus(carId, { status: "متاحة", note: "", startDate: "", endDate: "" });
   };
 
   if (!isAuth) {
@@ -70,7 +75,7 @@ const Admin = () => {
 
       <main className="max-w-4xl mx-auto p-6 space-y-4">
         {featuredCars.map((car) => {
-          const info = carStatuses[car.id] || { status: "متاحة", note: "" };
+          const info = carStatuses[car.id] || { status: "متاحة", note: "", startDate: "", endDate: "" };
           return (
             <motion.div
               key={car.id}
@@ -92,11 +97,15 @@ const Admin = () => {
                     className={`flex items-center gap-1 font-body text-xs px-2 py-1 rounded-sm ${
                       info.status === "متاحة"
                         ? "bg-green-500/10 text-green-500"
-                        : "bg-red-500/10 text-red-500"
+                        : info.status === "محجوزة"
+                        ? "bg-red-500/10 text-red-500"
+                        : "bg-yellow-500/10 text-yellow-500"
                     }`}
                   >
                     {info.status === "متاحة" ? (
                       <CheckCircle className="h-3 w-3" />
+                    ) : info.status === "صيانة" ? (
+                      <AlertTriangle className="h-3 w-3" />
                     ) : (
                       <XCircle className="h-3 w-3" />
                     )}
@@ -106,7 +115,7 @@ const Admin = () => {
 
                 <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => updateStatus(car.id, "متاحة", "")}
+                    onClick={() => updateStatus(car.id, { status: "متاحة", note: "", startDate: "", endDate: "" })}
                     className={`px-3 py-1.5 rounded-sm font-body text-xs border transition-colors ${
                       info.status === "متاحة"
                         ? "border-green-500 bg-green-500/10 text-green-500"
@@ -116,7 +125,7 @@ const Admin = () => {
                     متاحة
                   </button>
                   <button
-                    onClick={() => updateStatus(car.id, "محجوزة", info.note)}
+                    onClick={() => updateStatus(car.id, { status: "محجوزة" })}
                     className={`px-3 py-1.5 rounded-sm font-body text-xs border transition-colors ${
                       info.status === "محجوزة"
                         ? "border-red-500 bg-red-500/10 text-red-500"
@@ -126,7 +135,7 @@ const Admin = () => {
                     محجوزة
                   </button>
                   <button
-                    onClick={() => updateStatus(car.id, "صيانة", info.note)}
+                    onClick={() => updateStatus(car.id, { status: "صيانة" })}
                     className={`px-3 py-1.5 rounded-sm font-body text-xs border transition-colors ${
                       info.status === "صيانة"
                         ? "border-yellow-500 bg-yellow-500/10 text-yellow-500"
@@ -135,15 +144,47 @@ const Admin = () => {
                   >
                     صيانة
                   </button>
+                  {info.status === "محجوزة" && (
+                    <button
+                      onClick={() => cancelBooking(car.id)}
+                      className="px-3 py-1.5 rounded-sm font-body text-xs border border-destructive text-destructive hover:bg-destructive/10 transition-colors"
+                    >
+                      إلغاء الحجز
+                    </button>
+                  )}
                 </div>
 
+                {/* Booking date range */}
+                {info.status === "محجوزة" && (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-muted-foreground font-body text-xs">من:</span>
+                      <input
+                        type="date"
+                        value={info.startDate}
+                        onChange={(e) => updateStatus(car.id, { startDate: e.target.value })}
+                        className="bg-secondary border border-border rounded-sm px-2 py-1 text-foreground font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground font-body text-xs">إلى:</span>
+                      <input
+                        type="date"
+                        value={info.endDate}
+                        onChange={(e) => updateStatus(car.id, { endDate: e.target.value })}
+                        className="bg-secondary border border-border rounded-sm px-2 py-1 text-foreground font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
                   <input
                     type="text"
-                    placeholder="ملاحظة (مثال: محجوزة من 12/2 إلى 15/2)"
+                    placeholder="ملاحظة إضافية..."
                     value={info.note}
-                    onChange={(e) => updateStatus(car.id, info.status, e.target.value)}
+                    onChange={(e) => updateStatus(car.id, { note: e.target.value })}
                     className="flex-1 bg-secondary border border-border rounded-sm px-3 py-2 text-foreground font-body text-sm placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
                   />
                 </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Crown, Globe } from "lucide-react";
+import { Menu, X, Crown, Globe, Settings } from "lucide-react";
 import { useLang } from "@/contexts/LangContext";
 
 const Header = () => {
@@ -43,6 +43,12 @@ const Header = () => {
             <Globe className="h-4 w-4" />
             {t("lang.switch")}
           </button>
+          <Link
+            to="/admin"
+            className="flex items-center gap-1.5 text-sm font-body tracking-wider text-muted-foreground hover:text-primary transition-colors duration-300"
+          >
+            <Settings className="h-4 w-4" />
+          </Link>
           <a
             href="#fleet"
             className="px-5 py-2 text-sm font-body tracking-wider uppercase bg-primary text-primary-foreground rounded-sm hover:bg-primary/90 transition-colors duration-300"
@@ -85,6 +91,14 @@ const Header = () => {
                 <Globe className="h-4 w-4" />
                 {t("lang.switch")}
               </button>
+              <Link
+                to="/admin"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-1.5 text-sm font-body tracking-wider text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Settings className="h-4 w-4" />
+                {t("nav.admin")}
+              </Link>
               <a
                 href="#fleet"
                 onClick={() => setMobileOpen(false)}
