@@ -1,3 +1,5 @@
+export type FuelType = "gasoline" | "electric" | "hybrid";
+
 export interface Car {
   id: string;
   name: string;
@@ -14,6 +16,7 @@ export interface Car {
   vendorVerified: boolean;
   available: boolean;
   occasion?: string[];
+  fuelType: FuelType;
 }
 
 export interface Collection {
@@ -67,6 +70,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "رجال اعمال", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "2",
@@ -84,6 +88,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "3",
@@ -101,6 +106,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "4",
@@ -118,6 +124,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["استخدام شخصي"],
+    fuelType: "electric",
   },
   {
     id: "5",
@@ -135,6 +142,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "6",
@@ -152,6 +160,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "7",
@@ -169,6 +178,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "رجال اعمال"],
+    fuelType: "gasoline",
   },
   {
     id: "8",
@@ -186,6 +196,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "استخدام شخصي"],
+    fuelType: "electric",
   },
   {
     id: "9",
@@ -203,6 +214,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "رجال اعمال", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "10",
@@ -220,6 +232,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "11",
@@ -237,6 +250,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "12",
@@ -254,6 +268,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس"],
+    fuelType: "gasoline",
   },
   {
     id: "13",
@@ -271,6 +286,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "14",
@@ -288,6 +304,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "استخدام شخصي"],
+    fuelType: "electric",
   },
   {
     id: "15",
@@ -305,6 +322,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "16",
@@ -322,6 +340,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
   {
     id: "17",
@@ -339,6 +358,7 @@ export const featuredCars: Car[] = [
     vendorVerified: true,
     available: true,
     occasion: ["رجال اعمال", "اعراس", "استخدام شخصي"],
+    fuelType: "gasoline",
   },
 ];
 
