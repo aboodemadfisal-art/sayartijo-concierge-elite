@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle, Briefcase, Heart, User } from "lucide-react";
+import { X, MessageCircle, Briefcase, Heart, User, CarFront, Truck, Crown } from "lucide-react";
 import type { Car } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
@@ -20,9 +20,16 @@ const weddingExtras = [
   { id: "مسكة عروس", labelKey: "booking.bouquet" },
 ];
 
+const additionalServices = [
+  { id: "سائق خاص", icon: CarFront, labelKey: "booking.driver" },
+  { id: "توصيل باب لباب", icon: Truck, labelKey: "booking.doorDelivery" },
+  { id: "خدمة VIP", icon: Crown, labelKey: "booking.vipService" },
+];
+
 const BookingModal = ({ car, onClose }: BookingModalProps) => {
   const [category, setCategory] = useState("");
   const [extras, setExtras] = useState<string[]>([]);
+  const [services, setServices] = useState<string[]>([]);
   const { t } = useLang();
 
   const toggleExtra = (extra: string) => {
@@ -31,12 +38,22 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
     );
   };
 
+  const toggleService = (service: string) => {
+    setServices((prev) =>
+      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+    );
+  };
+
   const sendToWhatsApp = () => {
     const phoneNumber = "962791616190";
-    let message = `مرحباً اريد حجز من سيارتي دوت جو\nالسيارة: ${car.brand} ${car.name}\nالفئة: ${category}`;
+    let message = `طلب جديد من Sayarti.jo\nالسيارة: ${car.brand} ${car.name}\nالفئة: ${category}`;
 
     if (category === "اعراس" && extras.length > 0) {
-      message += `\nالإضافات: ${extras.join(" و ")}`;
+      message += `\nإضافات عرس: ${extras.join(" و ")}`;
+    }
+
+    if (services.length > 0) {
+      message += `\nخدمات إضافية: ${services.join(" و ")}`;
     }
 
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -70,6 +87,7 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
           </div>
 
           <div className="p-5 space-y-5">
+            {/* Usage Category */}
             <div>
               <p className="text-muted-foreground font-body text-sm mb-3">{t("booking.selectType")}</p>
               <div className="space-y-2">
@@ -96,6 +114,7 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
               </div>
             </div>
 
+            {/* Wedding Extras */}
             <AnimatePresence>
               {category === "اعراس" && (
                 <motion.div
@@ -109,25 +128,44 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
                       {t("booking.weddingExtras")}
                     </p>
                     {weddingExtras.map((extra) => (
-                      <label
-                        key={extra.id}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
+                      <label key={extra.id} className="flex items-center gap-3 cursor-pointer">
                         <input
                           type="checkbox"
                           checked={extras.includes(extra.id)}
                           onChange={() => toggleExtra(extra.id)}
                           className="accent-primary"
                         />
-                        <span className="text-foreground font-body text-sm">
-                          {t(extra.labelKey)}
-                        </span>
+                        <span className="text-foreground font-body text-sm">{t(extra.labelKey)}</span>
                       </label>
                     ))}
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Additional Services */}
+            <div>
+              <p className="text-muted-foreground font-body text-sm mb-3">{t("booking.additionalServices")}</p>
+              <div className="space-y-2">
+                {additionalServices.map((svc) => {
+                  const Icon = svc.icon;
+                  return (
+                    <button
+                      key={svc.id}
+                      onClick={() => toggleService(svc.id)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-sm border transition-colors duration-200 ${
+                        services.includes(svc.id)
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border text-muted-foreground hover:border-primary/30"
+                      }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      <span className="font-body text-sm tracking-wider">{t(svc.labelKey)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
             <button
               onClick={sendToWhatsApp}
