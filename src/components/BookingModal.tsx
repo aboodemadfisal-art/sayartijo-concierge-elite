@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle, Briefcase, Heart, User, CarFront, Truck, Crown } from "lucide-react";
+import { X, MessageCircle, Briefcase, Heart, User, CarFront, Truck, Crown, Calendar, Clock } from "lucide-react";
 import type { Car } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
@@ -30,6 +30,8 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
   const [category, setCategory] = useState("");
   const [extras, setExtras] = useState<string[]>([]);
   const [services, setServices] = useState<string[]>([]);
+  const [bookingDate, setBookingDate] = useState("");
+  const [bookingTime, setBookingTime] = useState("");
   const { t } = useLang();
 
   const toggleExtra = (extra: string) => {
@@ -48,6 +50,13 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
     const phoneNumber = "962791616190";
     let message = `طلب جديد من Sayarti.jo\nالسيارة: ${car.brand} ${car.name}\nالفئة: ${category}`;
 
+    if (bookingDate) {
+      message += `\nتاريخ الحجز: ${bookingDate}`;
+    }
+    if (bookingTime) {
+      message += `\nوقت الاستلام: ${bookingTime}`;
+    }
+
     if (category === "اعراس" && extras.length > 0) {
       message += `\nإضافات عرس: ${extras.join(" و ")}`;
     }
@@ -59,6 +68,9 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
+
+  // Get today's date in YYYY-MM-DD format for min attribute
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <AnimatePresence>
@@ -87,6 +99,35 @@ const BookingModal = ({ car, onClose }: BookingModalProps) => {
           </div>
 
           <div className="p-5 space-y-5">
+            {/* Date & Time */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="flex items-center gap-1.5 text-muted-foreground font-body text-sm mb-2">
+                  <Calendar className="h-4 w-4" />
+                  {t("booking.date")}
+                </label>
+                <input
+                  type="date"
+                  min={today}
+                  value={bookingDate}
+                  onChange={(e) => setBookingDate(e.target.value)}
+                  className="w-full p-3 bg-secondary border border-border rounded-sm text-foreground font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                />
+              </div>
+              <div>
+                <label className="flex items-center gap-1.5 text-muted-foreground font-body text-sm mb-2">
+                  <Clock className="h-4 w-4" />
+                  {t("booking.time")}
+                </label>
+                <input
+                  type="time"
+                  value={bookingTime}
+                  onChange={(e) => setBookingTime(e.target.value)}
+                  className="w-full p-3 bg-secondary border border-border rounded-sm text-foreground font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                />
+              </div>
+            </div>
+
             {/* Usage Category */}
             <div>
               <p className="text-muted-foreground font-body text-sm mb-3">{t("booking.selectType")}</p>

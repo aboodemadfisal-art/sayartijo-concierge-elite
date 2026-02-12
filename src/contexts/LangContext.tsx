@@ -96,6 +96,14 @@ const translations: Record<string, Record<Lang, string>> = {
   "booking.driver": { en: "Private Chauffeur", ar: "سائق خاص" },
   "booking.doorDelivery": { en: "Door-to-Door Delivery", ar: "توصيل باب لباب" },
   "booking.vipService": { en: "VIP Service", ar: "خدمة VIP — تسليم في الموقع" },
+  "booking.date": { en: "Booking Date", ar: "تاريخ الحجز" },
+  "booking.time": { en: "Pickup Time", ar: "وقت الاستلام" },
+
+  // Fuel types
+  "fuel.all": { en: "All", ar: "الكل" },
+  "fuel.gasoline": { en: "Gasoline", ar: "بنزين" },
+  "fuel.electric": { en: "Electric", ar: "كهرباء" },
+  "fuel.hybrid": { en: "Hybrid", ar: "هايبرد" },
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);
