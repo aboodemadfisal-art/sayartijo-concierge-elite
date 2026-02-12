@@ -7,6 +7,7 @@ import BookingModal from "@/components/BookingModal";
 import { featuredCars } from "@/data/cars";
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
+import { getCarStatus } from "@/lib/carStatus";
 
 const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
 
@@ -18,19 +19,7 @@ const CarDetail = () => {
 
   const BackArrow = isRTL ? ArrowRight : ArrowLeft;
 
-  // Get car status from localStorage
-  const getCarStatus = () => {
-    try {
-      const saved = localStorage.getItem("sayarti_car_statuses");
-      if (saved && car) {
-        const statuses = JSON.parse(saved);
-        return statuses[car.id] || { status: "متاحة", note: "" };
-      }
-    } catch {}
-    return { status: "متاحة", note: "" };
-  };
-
-  const carStatus = getCarStatus();
+  const carStatus = car ? getCarStatus(car.id) : { status: "متاحة", note: "", startDate: "", endDate: "" };
 
   if (!car) {
     return (
@@ -114,11 +103,6 @@ const CarDetail = () => {
                   <FuelIcon className="h-3.5 w-3.5" />
                   {t(`fuel.${car.fuelType}`)}
                 </span>
-                {carStatus.note && (
-                  <span className="text-muted-foreground font-body text-xs">
-                    {carStatus.note}
-                  </span>
-                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-8">

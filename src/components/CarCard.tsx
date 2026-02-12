@@ -1,14 +1,18 @@
 import { motion } from "framer-motion";
-import { BadgeCheck, Gauge, Users, Fuel, Zap, Leaf } from "lucide-react";
+import { BadgeCheck, Gauge, Users, Fuel, Zap, Leaf, XCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Car } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
+import { getCarStatus } from "@/lib/carStatus";
 
 const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
 
 const CarCard = ({ car, index, onBook }: { car: Car; index: number; onBook: (car: Car) => void }) => {
   const { t } = useLang();
   const FuelIcon = fuelIcons[car.fuelType];
+  const carStatus = getCarStatus(car.id);
+  const isBooked = carStatus.status === "محجوزة";
+  const isUnavailable = carStatus.status === "صيانة";
 
   return (
     <motion.div
@@ -21,6 +25,14 @@ const CarCard = ({ car, index, onBook }: { car: Car; index: number; onBook: (car
         <div className="bg-card border border-border rounded-sm overflow-hidden hover-gold transition-all duration-300 hover:border-primary/30">
           <Link to={`/car/${car.id}`} className="block">
             <div className="aspect-[16/10] overflow-hidden relative">
+              {(isBooked || isUnavailable) && (
+                <div className="absolute inset-0 bg-background/60 z-10 flex items-center justify-center">
+                  <span className="flex items-center gap-1.5 px-4 py-2 bg-red-500/90 text-white font-body text-xs tracking-wider rounded-sm">
+                    <XCircle className="h-3.5 w-3.5" />
+                    {isBooked ? t("status.booked") : t("status.maintenance")}
+                  </span>
+                </div>
+              )}
               <img
                 src={car.image}
                 alt={`${car.brand} ${car.name}`}
