@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import CollectionCard from "@/components/CollectionCard";
 import CarCard from "@/components/CarCard";
 import ConciergeSection from "@/components/ConciergeSection";
+import GuaranteesSection from "@/components/GuaranteesSection";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import { collections, featuredCars } from "@/data/cars";
@@ -135,6 +136,7 @@ const Index = () => {
         </div>
       </section>
 
+      <GuaranteesSection />
       <ConciergeSection />
       <Footer />
 

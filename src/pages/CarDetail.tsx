@@ -1,12 +1,14 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, BadgeCheck, Gauge, Users, Zap, Car, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, BadgeCheck, Gauge, Users, Zap, Car, MessageCircle, Fuel, Leaf, Shield } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import { featuredCars } from "@/data/cars";
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
+
+const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
 
 const CarDetail = () => {
   const { id } = useParams();
@@ -16,6 +18,20 @@ const CarDetail = () => {
 
   const BackArrow = isRTL ? ArrowRight : ArrowLeft;
 
+  // Get car status from localStorage
+  const getCarStatus = () => {
+    try {
+      const saved = localStorage.getItem("sayarti_car_statuses");
+      if (saved && car) {
+        const statuses = JSON.parse(saved);
+        return statuses[car.id] || { status: "متاحة", note: "" };
+      }
+    } catch {}
+    return { status: "متاحة", note: "" };
+  };
+
+  const carStatus = getCarStatus();
+
   if (!car) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -23,6 +39,8 @@ const CarDetail = () => {
       </div>
     );
   }
+
+  const FuelIcon = fuelIcons[car.fuelType];
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,9 +92,34 @@ const CarDetail = () => {
 
               <h1 className="font-display text-4xl md:text-5xl text-foreground mb-2">{car.name}</h1>
 
-              <p className="text-muted-foreground font-body text-sm mb-6">
+              <p className="text-muted-foreground font-body text-sm mb-4">
                 {t("detail.by")} <span className="text-foreground">{car.vendor}</span>
               </p>
+
+              {/* Status & Fuel badges */}
+              <div className="flex items-center gap-3 mb-6">
+                <span
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm font-body text-xs ${
+                    carStatus.status === "متاحة"
+                      ? "bg-green-500/10 text-green-500"
+                      : carStatus.status === "محجوزة"
+                      ? "bg-red-500/10 text-red-500"
+                      : "bg-yellow-500/10 text-yellow-500"
+                  }`}
+                >
+                  <Shield className="h-3.5 w-3.5" />
+                  {carStatus.status}
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-primary/10 text-primary font-body text-xs">
+                  <FuelIcon className="h-3.5 w-3.5" />
+                  {t(`fuel.${car.fuelType}`)}
+                </span>
+                {carStatus.note && (
+                  <span className="text-muted-foreground font-body text-xs">
+                    {carStatus.note}
+                  </span>
+                )}
+              </div>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="p-4 bg-card border border-border rounded-sm">

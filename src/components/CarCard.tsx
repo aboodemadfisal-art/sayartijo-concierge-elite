@@ -1,10 +1,14 @@
 import { motion } from "framer-motion";
-import { BadgeCheck, Gauge, Users } from "lucide-react";
+import { BadgeCheck, Gauge, Users, Fuel, Zap, Leaf } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { Car } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
+const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
+
 const CarCard = ({ car, index, onBook }: { car: Car; index: number; onBook: (car: Car) => void }) => {
   const { t } = useLang();
+  const FuelIcon = fuelIcons[car.fuelType];
 
   return (
     <motion.div
@@ -15,18 +19,26 @@ const CarCard = ({ car, index, onBook }: { car: Car; index: number; onBook: (car
     >
       <div className="group block">
         <div className="bg-card border border-border rounded-sm overflow-hidden hover-gold transition-all duration-300 hover:border-primary/30">
-          <div className="aspect-[16/10] overflow-hidden relative">
-            <img
-              src={car.image}
-              alt={`${car.brand} ${car.name}`}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute bottom-3 end-3 px-3 py-1 bg-background/80 backdrop-blur-sm rounded-sm">
-              <span className="text-primary font-body text-[10px] tracking-wider font-semibold">
-                SAYARTI.JO
-              </span>
+          <Link to={`/car/${car.id}`} className="block">
+            <div className="aspect-[16/10] overflow-hidden relative">
+              <img
+                src={car.image}
+                alt={`${car.brand} ${car.name}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute top-3 start-3 flex items-center gap-1 px-2 py-1 bg-background/80 backdrop-blur-sm rounded-sm">
+                <FuelIcon className="h-3 w-3 text-primary" />
+                <span className="text-foreground font-body text-[10px] tracking-wider">
+                  {t(`fuel.${car.fuelType}`)}
+                </span>
+              </div>
+              <div className="absolute bottom-3 end-3 px-3 py-1 bg-background/80 backdrop-blur-sm rounded-sm">
+                <span className="text-primary font-body text-[10px] tracking-wider font-semibold">
+                  SAYARTI.JO
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
 
           <div className="p-5">
             <div className="flex items-center gap-2 mb-1">
@@ -37,7 +49,9 @@ const CarCard = ({ car, index, onBook }: { car: Car; index: number; onBook: (car
                 <BadgeCheck className="h-3.5 w-3.5 text-primary" />
               )}
             </div>
-            <h3 className="font-display text-lg text-foreground mb-3">{car.name}</h3>
+            <Link to={`/car/${car.id}`}>
+              <h3 className="font-display text-lg text-foreground mb-3 hover:text-primary transition-colors">{car.name}</h3>
+            </Link>
             <div className="flex items-center gap-4 text-muted-foreground mb-4">
               <span className="flex items-center gap-1 text-xs font-body">
                 <Gauge className="h-3.5 w-3.5" />
