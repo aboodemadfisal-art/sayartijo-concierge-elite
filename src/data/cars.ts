@@ -34,11 +34,20 @@ import porscheImg from "@/assets/car-porsche.jpg";
 import teslaXImg from "@/assets/car-tesla-x.jpg";
 import bmw740Img from "@/assets/car-bmw-740.jpg";
 import audiR8Img from "@/assets/car-audi-r8.jpg";
+import nissanPatrolImg from "@/assets/car-nissan-patrol.jpg";
+import mgClassicImg from "@/assets/car-mg-classic.jpg";
+import lexusLxImg from "@/assets/car-lexus-lx.jpg";
+import teslaYBlackImg from "@/assets/car-tesla-y-black.jpg";
+import teslaYBlack2Img from "@/assets/car-tesla-y-black2.jpg";
+import mercedesEImg from "@/assets/car-mercedes-e.jpg";
+import landcruiserWeddingImg from "@/assets/car-landcruiser-wedding.jpg";
+import landcruiser300Img from "@/assets/car-landcruiser-300.jpg";
 
 export const collections: Collection[] = [
   { id: "supercars", title: "Supercars", description: "Raw power meets Italian artistry", image: audiR8Img, carCount: 3 },
-  { id: "prestige", title: "Prestige Sedans", description: "The pinnacle of refinement", image: bmw740Img, carCount: 5 },
-  { id: "luxury-suv", title: "Luxury SUVs", description: "Command every road", image: rangeRoverImg, carCount: 2 },
+  { id: "prestige", title: "Prestige Sedans", description: "The pinnacle of refinement", image: bmw740Img, carCount: 8 },
+  { id: "luxury-suv", title: "Luxury SUVs", description: "Command every road", image: landcruiser300Img, carCount: 6 },
+  { id: "wedding", title: "Wedding Cars", description: "Make your day unforgettable", image: mgClassicImg, carCount: 4 },
 ];
 
 export const featuredCars: Car[] = [
