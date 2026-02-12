@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Lock, Car, CheckCircle, XCircle, Calendar, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { featuredCars } from "@/data/cars";
+import { getCarStatus } from "@/lib/carStatus";
 
 const ADMIN_PIN = "5050";
 
@@ -75,7 +76,7 @@ const Admin = () => {
 
       <main className="max-w-4xl mx-auto p-6 space-y-4">
         {featuredCars.map((car) => {
-          const info = carStatuses[car.id] || { status: "متاحة", note: "", startDate: "", endDate: "" };
+          const info = carStatuses[car.id] || getCarStatus(car.id);
           return (
             <motion.div
               key={car.id}

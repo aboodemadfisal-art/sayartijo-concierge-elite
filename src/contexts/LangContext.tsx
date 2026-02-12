@@ -117,6 +117,11 @@ const translations: Record<string, Record<Lang, string>> = {
   "guarantee.quality.desc": { en: "Each car is meticulously maintained and detailed to the highest standards before every rental.", ar: "كل سيارة تُصان وتُجهّز بأعلى المعايير قبل كل تأجير." },
   "guarantee.support": { en: "24/7 Support", ar: "دعم متواصل" },
   "guarantee.support.desc": { en: "Round-the-clock assistance with a dedicated concierge team always ready to help.", ar: "مساعدة على مدار الساعة مع فريق كونسيرج مخصص جاهز دائماً." },
+
+  // Status labels
+  "status.available": { en: "Available", ar: "متاحة" },
+  "status.booked": { en: "Booked", ar: "محجوزة" },
+  "status.maintenance": { en: "Under Maintenance", ar: "صيانة" },
 };
 
 const LangContext = createContext<LangContextType | undefined>(undefined);
