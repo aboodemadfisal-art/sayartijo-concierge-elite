@@ -226,6 +226,8 @@ const Admin = () => {
             </motion.div>
           );
         })}
+        </>
+        )}
       </main>
     </div>
   );
