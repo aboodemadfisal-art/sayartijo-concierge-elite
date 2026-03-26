@@ -13,7 +13,7 @@ const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
 
 const CarDetail = () => {
   const { id } = useParams();
-  const car = featuredCars.find((c) => c.id === id);
+  const car = getAllCars().find((c) => c.id === id);
   const [showBooking, setShowBooking] = useState(false);
   const { t, isRTL } = useLang();
 

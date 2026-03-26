@@ -26,10 +26,12 @@ const Index = () => {
   const [bookingCar, setBookingCar] = useState<Car | null>(null);
   const [fuelFilter, setFuelFilter] = useState<FuelType | "all">("all");
 
+  const allCars = useMemo(() => getAllCars(), []);
+
   const filteredCars = useMemo(() => {
-    if (fuelFilter === "all") return featuredCars;
-    return featuredCars.filter((car) => car.fuelType === fuelFilter);
-  }, [fuelFilter]);
+    if (fuelFilter === "all") return allCars;
+    return allCars.filter((car) => car.fuelType === fuelFilter);
+  }, [fuelFilter, allCars]);
 
   // Group cars by brand
   const groupedCars = useMemo(() => {
