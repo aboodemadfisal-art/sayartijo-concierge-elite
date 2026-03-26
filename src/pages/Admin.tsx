@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Lock, Car, CheckCircle, XCircle, Calendar, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { featuredCars } from "@/data/cars";
 import { getCarStatus } from "@/lib/carStatus";
+import { getAllCars } from "@/lib/carStore";
+import AdminCarEditor from "@/components/AdminCarEditor";
 
 const ADMIN_PIN = "5050";
 
