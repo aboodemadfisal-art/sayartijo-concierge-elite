@@ -9,7 +9,8 @@ import ConciergeSection from "@/components/ConciergeSection";
 import GuaranteesSection from "@/components/GuaranteesSection";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
-import { collections, featuredCars } from "@/data/cars";
+import { collections } from "@/data/cars";
+import { getAllCars } from "@/lib/carStore";
 import type { Car, FuelType } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
