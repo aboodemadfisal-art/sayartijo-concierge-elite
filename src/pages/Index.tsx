@@ -9,7 +9,8 @@ import ConciergeSection from "@/components/ConciergeSection";
 import GuaranteesSection from "@/components/GuaranteesSection";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
-import { collections, featuredCars } from "@/data/cars";
+import { collections } from "@/data/cars";
+import { getAllCars } from "@/lib/carStore";
 import type { Car, FuelType } from "@/data/cars";
 import { useLang } from "@/contexts/LangContext";
 
@@ -25,10 +26,12 @@ const Index = () => {
   const [bookingCar, setBookingCar] = useState<Car | null>(null);
   const [fuelFilter, setFuelFilter] = useState<FuelType | "all">("all");
 
+  const allCars = useMemo(() => getAllCars(), []);
+
   const filteredCars = useMemo(() => {
-    if (fuelFilter === "all") return featuredCars;
-    return featuredCars.filter((car) => car.fuelType === fuelFilter);
-  }, [fuelFilter]);
+    if (fuelFilter === "all") return allCars;
+    return allCars.filter((car) => car.fuelType === fuelFilter);
+  }, [fuelFilter, allCars]);
 
   // Group cars by brand
   const groupedCars = useMemo(() => {

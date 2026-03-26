@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Lock, Car, CheckCircle, XCircle, Calendar, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { featuredCars } from "@/data/cars";
 import { getCarStatus } from "@/lib/carStatus";
+import { getAllCars } from "@/lib/carStore";
+import AdminCarEditor from "@/components/AdminCarEditor";
 
 const ADMIN_PIN = "5050";
+
+type AdminTab = "status" | "cars";
 
 const Admin = () => {
   const [pin, setPin] = useState("");
   const [isAuth, setIsAuth] = useState(false);
+  const [activeTab, setActiveTab] = useState<AdminTab>("status");
+  const [carsVersion, setCarsVersion] = useState(0);
   const [carStatuses, setCarStatuses] = useState<Record<string, { status: string; note: string; startDate: string; endDate: string }>>(
     () => {
       const saved = localStorage.getItem("sayarti_car_statuses");
@@ -74,8 +79,36 @@ const Admin = () => {
         </Link>
       </header>
 
+      {/* Tabs */}
+      <div className="max-w-4xl mx-auto px-6 pt-4 flex gap-2">
+        <button
+          onClick={() => setActiveTab("status")}
+          className={`px-4 py-2 rounded-sm font-body text-xs border transition-colors ${
+            activeTab === "status"
+              ? "border-primary bg-primary/10 text-primary"
+              : "border-border text-muted-foreground hover:border-primary/50"
+          }`}
+        >
+          حالة السيارات
+        </button>
+        <button
+          onClick={() => setActiveTab("cars")}
+          className={`px-4 py-2 rounded-sm font-body text-xs border transition-colors ${
+            activeTab === "cars"
+              ? "border-primary bg-primary/10 text-primary"
+              : "border-border text-muted-foreground hover:border-primary/50"
+          }`}
+        >
+          إدارة السيارات
+        </button>
+      </div>
+
       <main className="max-w-4xl mx-auto p-6 space-y-4">
-        {featuredCars.map((car) => {
+        {activeTab === "cars" ? (
+          <AdminCarEditor cars={getAllCars()} onUpdate={() => setCarsVersion((v) => v + 1)} />
+        ) : (
+        <>
+        {getAllCars().map((car) => {
           const info = carStatuses[car.id] || getCarStatus(car.id);
           return (
             <motion.div
@@ -193,6 +226,8 @@ const Admin = () => {
             </motion.div>
           );
         })}
+        </>
+        )}
       </main>
     </div>
   );

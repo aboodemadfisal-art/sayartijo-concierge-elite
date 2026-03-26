@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, BadgeCheck, Gauge, Users, Zap, Car, MessageCircl
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
-import { featuredCars } from "@/data/cars";
+import { getAllCars } from "@/lib/carStore";
 import { useState } from "react";
 import { useLang } from "@/contexts/LangContext";
 import { getCarStatus } from "@/lib/carStatus";
@@ -13,7 +13,7 @@ const fuelIcons = { gasoline: Fuel, electric: Zap, hybrid: Leaf };
 
 const CarDetail = () => {
   const { id } = useParams();
-  const car = featuredCars.find((c) => c.id === id);
+  const car = getAllCars().find((c) => c.id === id);
   const [showBooking, setShowBooking] = useState(false);
   const { t, isRTL } = useLang();
 
