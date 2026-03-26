@@ -8,9 +8,13 @@ import AdminCarEditor from "@/components/AdminCarEditor";
 
 const ADMIN_PIN = "5050";
 
+type AdminTab = "status" | "cars";
+
 const Admin = () => {
   const [pin, setPin] = useState("");
   const [isAuth, setIsAuth] = useState(false);
+  const [activeTab, setActiveTab] = useState<AdminTab>("status");
+  const [carsVersion, setCarsVersion] = useState(0);
   const [carStatuses, setCarStatuses] = useState<Record<string, { status: string; note: string; startDate: string; endDate: string }>>(
     () => {
       const saved = localStorage.getItem("sayarti_car_statuses");
