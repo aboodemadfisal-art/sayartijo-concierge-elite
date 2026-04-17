@@ -6,7 +6,7 @@ workflows:
     environment:
       node: 20
       vars:
-        PACKAGE_NAME: "app.lovable.43155ac93bb547fea443458bc00775a6"
+        PACKAGE_NAME: "app.lovable.sayartijo43155ac93bb547fea443458bc00775a6"
     triggering:
       events:
         - push
@@ -18,23 +18,25 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
-          npm install -D @capacitor/cli @capacitor/core @capacitor/android
       - name: Build web app
         script: |
           npm run build
-      - name: Add Android platform if missing
+      - name: Initialize Android platform if missing
         script: |
           if [ ! -d "android" ]; then
             npx cap add android
           fi
-      - name: Sync Capacitor (copy web assets + plugins)
+      - name: Copy web assets to Android
+        script: |
+          npx cap copy android
+      - name: Sync Capacitor plugins
         script: |
           npx cap sync android
       - name: Build Android debug APK
         script: |
           cd android
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleDebug --no-daemon
     artifacts:
       - android/app/build/outputs/**/*.apk
     publishing:

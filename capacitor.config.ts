@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.lovable.43155ac93bb547fea443458bc00775a6',
+  appId: 'app.lovable.sayartijo43155ac93bb547fea443458bc00775a6',
   appName: 'sayartijo-concierge-elite',
   webDir: 'dist',
   server: {
