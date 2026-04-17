@@ -1,16 +1,11 @@
 workflows:
   sayartijo-android-build:
-    name: Sayartijo Android Build
+    name: Sayartijo Android Build (Debug)
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      android_signing:
-        - sayartijo_keystore
-      groups:
-        - google_play
       vars:
         PACKAGE_NAME: "app.lovable.43155ac93bb547fea443458bc00775a6"
-        CAPACITOR_ANDROID_RELEASE_TYPE: "AAB"
     triggering:
       events:
         - push
@@ -26,15 +21,19 @@ workflows:
       - name: Build web app
         script: |
           npm run build
+      - name: Add Android platform
+        script: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
       - name: Sync Capacitor
         script: |
           npx cap sync android
-      - name: Build Android release
+      - name: Build Android debug APK
         script: |
           cd android
-          ./gradlew bundleRelease
+          ./gradlew assembleDebug
     artifacts:
-      - android/app/build/outputs/**/*.aab
       - android/app/build/outputs/**/*.apk
     publishing:
       email:
