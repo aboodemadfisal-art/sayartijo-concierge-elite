@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
+import { showBannerAd, hideBannerAd } from "@/lib/admob";
 import { Fuel, Zap, Leaf } from "lucide-react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
@@ -27,6 +28,13 @@ const Index = () => {
   const [fuelFilter, setFuelFilter] = useState<FuelType | "all">("all");
 
   const allCars = useMemo(() => getAllCars(), []);
+
+  useEffect(() => {
+    showBannerAd();
+    return () => {
+      hideBannerAd();
+    };
+  }, []);
 
   const filteredCars = useMemo(() => {
     if (fuelFilter === "all") return allCars;
